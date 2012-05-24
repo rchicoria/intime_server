@@ -1,0 +1,145 @@
+.form-title
+  Manage bus stops
+%br
+
+.inside
+
+  #map_canvas{:style=> "width:100%; height:100%; height: 500px;"}
+
+  #clean_route
+    = link_to "Clean map", nil, :remote => true
+  = link_to 'Back', bus_stops_path
+
+  
+
+:javascript
+
+  var lat;
+  var lng;
+
+  window.onload = init;
+
+  function init(){
+    $.getJSON(
+      'http://localhost:3000/bus_stops/',
+      function(data) {
+        for (var i = 0; i < data.length; i++ ) {
+          var latLng = new google.maps.LatLng(data[i]["lat"],data[i]["lon"]);
+          var marker = placeMarkerStart(latLng, data[i]["name"]);
+        }
+      }
+    );
+    gmaps_initialize();
+    google.maps.event.addListener(map, 'click', function(event) {
+      var marker = placeMarker(event.latLng);
+      lat = event.latLng.lat();
+      lng = event.latLng.lng();
+      prompt_user_create(marker);
+    });
+    google.maps.event.addListener(map, 'rightclick', function(event) {
+      var marker = placeMarker(event.latLng);
+      lat = event.latLng.lat();
+      lng = event.latLng.lng();
+      prompt_user_create(marker);
+    });
+  }; 
+
+  $('#clean_route').click(function() {    
+    clearOverlays();
+  });
+
+  function placeMarker(location) {
+    var marker = new google.maps.Marker({
+        position: location, 
+        animation: google.maps.Animation.BOUNCE,
+        map: map
+    });
+    markersArray.push(marker);
+    google.maps.event.addListener(marker, 'click', function() {
+      prompt_user_edit(marker);
+    });
+    return marker;
+  };
+
+  function placeMarkerStart(location, stopName) {
+    var marker = new google.maps.Marker({
+        position: location, 
+        animation: null,
+        map: map,
+    });
+    marker.setTitle(stopName);
+    markersArray.push(marker);
+    google.maps.event.addListener(marker, 'click', function() {
+      prompt_user_edit(marker);
+    });
+  };
+
+  function prompt_user_create(marker) {
+    var b = new Boxy("<input type=\"text\" id=\"bus-stop-name-input\"/><input type=\"submit\" id=\"dialog-accept\" value=\"\"/>", {modal: 'true', title: "Create new bus stop"});
+    $('#dialog-accept').click(
+      function(){
+        $.ajax({
+          url: 'http://localhost:3000/bus_stops/',
+          type: 'POST',
+          data: {
+            'bus_stop[name]': $('#bus-stop-name-input').val(),
+            'bus_stop[lat]': lat,
+            'bus_stop[lon]': lng,
+          },
+          dataType: 'json',
+        })
+        b.hideAndUnload();
+        marker.setAnimation(null);
+        marker.setTitle($('#bus-stop-name-input').val());
+      }
+    );
+    $('.close').click(
+      function(){
+        removeLastMarker();
+        b.hideAndUnload();
+      }
+    );
+  }
+
+  function prompt_user_edit(marker) {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    var b = new Boxy("<div id=\"dialog-name-accept\"><input type=\"text\" id=\"bus-stop-name-input\" value=\""+marker.getTitle().toString()+"\"/><input type=\"submit\" id=\"dialog-accept-edit\" value=\"\"/><input type=\"submit\" id=\"dialog-delete\" value=\"\"/></div>", {modal: 'true', title: "Edit bus stop"});
+    $('#dialog-accept-edit').click(
+      function(){
+        $.ajax({
+          url: 'http://localhost:3000/bus_stops/',
+          type: 'PUT',
+          data: {
+            'bus_stop[name]': $('#bus-stop-name-input').val(),
+            'find_name':marker.getTitle()
+          },
+          dataType: 'json',
+        })
+        b.hideAndUnload();
+        marker.setAnimation(null);
+        marker.setTitle($('#bus-stop-name-input').val());
+      }
+    );
+
+    $('#dialog-delete').click(
+      function(){
+        $.ajax({
+          url: 'http://localhost:3000/bus_stops/',
+          type: 'delete',
+          data: {
+            'find_name':marker.getTitle()
+          },
+          dataType: 'json',
+        })
+        b.hideAndUnload();
+        marker.setMap(null);
+      }
+    );
+
+    $('.close').click(
+      function(){
+        marker.setAnimation(null);
+        b.hideAndUnload();
+      }
+    );
+  }

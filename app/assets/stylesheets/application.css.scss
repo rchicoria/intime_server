@@ -1,0 +1,149 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+*/
+
+.content {
+  background-color: #eee;
+  padding: 0px 20px 20px 0px;
+  margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+  -webkit-border-radius: 0 0 6px 6px;
+  -moz-border-radius: 0 0 6px 6px;
+  border-radius: 0 0 6px 6px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+
+.span12 > form.formtastic, form.simple_form {
+	-webkit-border-radius: 60px 60px 60px 60px;
+	width: 250px;
+	padding: 25px 15px 15px 40px;
+}
+
+form.formtastic, form.simple_form {
+	background-color: #DEDEDE;
+	display: inline-block;
+	margin-bottom: 0px;
+}
+
+form.formtastic > li {
+	display: inline-block;
+}
+
+form.formtastic > .actions > input {
+	background-color: #eee; 
+}
+
+form.formtastic > li > label {
+	background-color: #DEDEDE;
+	font-size: 14px;
+	color: #4D4D4D;
+	list-style: none;
+	list-style-image: none;
+	list-style-type: none;
+	text-decoration: none;
+	width: 210px;
+	padding-left: 0px;
+}
+
+form.formtastic > li > input {
+	height: 25px;
+	font-size: 20px;
+	float: left;
+}
+
+.form-title{
+	display: inline-block;
+	font-size: 20px;
+	color: #FFFFFF;
+	background-color: #292929;
+	width: 220px;
+	height: 40px;
+	-webkit-border-radius: 0px 0px 60px 0px;
+	padding: 20px 0px 0px 20px;
+	box-shadow: 3px 3px 3px #888888;
+}
+
+.inside{
+	padding: 0px 0px 0px 50px;
+	margin-top: 20px;
+}
+
+.hidden-form{
+	display: none;
+	background-color: #292929;
+}
+
+.hidden-form > form.formtastic, form.simple_form {
+	background-color: #292929;
+	display: inline-block;
+}
+
+.hidden-form > form.formtastic > li > label {
+	background-color: #292929;
+	color: #FFFFFF;
+}
+
+#map_canvas { 
+	display: block;
+}
+
+#bus-stop-name-input {
+	width: 400px;
+	height: 20px;
+	font-size: 20px;
+	margin: 15px 15px 15px 15px;
+	display: inline;
+}
+
+#dialog-accept {
+    background:url(/assets/tick.png) no-repeat;
+    cursor:pointer;
+    width: 32px;
+    height: 32px;
+    border: none;
+    display: inline;
+    margin: 4px 15px 0px 0px;
+}
+
+#dialog-accept-edit {
+    background:url(/assets/tick-edit.png) no-repeat;
+    cursor:pointer;
+    width: 32px;
+    height: 32px;
+    border: none;
+    display: inline;
+    margin: 4px 15px 0px 0px;
+}
+
+#dialog-delete {
+    background:url(/assets/delete.png) no-repeat;
+    cursor:pointer;
+    width: 24px;
+    height: 24px;
+    border: none;
+    display: inline;
+    margin: 4px 15px 0px 0px;
+}
+
+.contextmenu{
+    visibility:hidden;
+    background:#ffffff;
+    border:1px solid #8888FF;
+    z-index: 10;  
+    position: relative;
+    width: 140px;
+}
+.contextmenu div{
+    padding-left: 5px
+}

@@ -1,0 +1,107 @@
+.form-title
+  View Routes
+%br
+.select-box{:style => "float: right;"}
+  = select("bus", "id", @buses.collect {|p| [ p.name, p.id ] }, {:include_blank => 'Select a Bus'})
+
+.inside
+
+  #map_canvas{:style=> "width:100%; height:100%; height: 500px;"}
+
+  #clean_route
+    = link_to "Clean map", nil, :remote => true
+  = link_to 'Back', bus_stops_path
+
+  
+
+:javascript
+
+  var lat;
+  var lng;
+
+  window.onload = init;
+
+  var bus_id = null;
+
+  var pathCoordinates = [];
+  var pathIds = [];
+  var path = new google.maps.Polyline({
+    path: pathCoordinates,
+    strokeColor: "#FF0000",
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+
+  $('#bus_id').change(function(){
+    bus_id = $('#bus_id').val();
+    init();
+  });
+
+  function gmaps_initialize(){
+    var latlng = new google.maps.LatLng(40.209508,-8.419712);
+    var myOptions = {
+      zoom: 14,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+    for (var i = 0; i < markersArray.length; i++ ) {
+      markersArray[i][0].setMap(map);
+    }
+  }
+
+  function init(){
+    markersArray = [];
+    pathCoordinates = [];
+    if (bus_id){
+      $.getJSON(
+        'http://localhost:3000/buses/'+bus_id,
+        function(data) {
+          for (var i = 0; i < data.length; i++ ) {
+            //alert(data[i][1]);
+            var latLng = new google.maps.LatLng(data[i][2],data[i][3]);
+            var marker = placeMarkerStart(latLng, data[i][1], data[i][0]);
+          }
+        }
+      );
+      gmaps_initialize();
+    }
+    else {
+      markersArray = [];
+      gmaps_initialize();
+    }
+  }; 
+
+  $('#clean_route').click(function() {    
+    clearOverlays();
+  });
+
+  function placeMarkerStart(location, stopName, id) {
+    var marker = new google.maps.Marker({
+        position: location, 
+        animation: null,
+        map: map,
+    });
+    marker.setTitle(stopName);
+    markersArray.push([marker, id]);
+    pathCoordinates.push(marker.position);
+    for(var i=0; i < markersArray.length; i++){
+      var temp = markersArray[i]
+      if(temp[0] == marker){
+        pathIds.push(temp[1]);
+        break;
+      }
+    }
+    path.setMap(null);
+    path = new google.maps.Polyline({
+      path: pathCoordinates,
+      strokeColor: "#FF0000",
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+    path.setMap(map);
+    if(marker.position == pathCoordinates[0] && pathCoordinates.length > 1)
+      promptUserCreateRoute();
+  };

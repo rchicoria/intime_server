@@ -1,0 +1,17 @@
+%h1 Listing bus_stops
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @bus_stops.each do |bus_stop|
+    %tr
+      %td= link_to 'Show', bus_stop
+      %td= link_to 'Edit', edit_bus_stop_path(bus_stop)
+      %td= link_to 'Destroy', bus_stop, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Bus stop', new_bus_stop_path

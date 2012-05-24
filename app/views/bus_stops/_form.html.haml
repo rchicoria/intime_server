@@ -1,0 +1,11 @@
+= semantic_form_for @bus_stop do |f|
+  -if @bus_stop.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@bus_stop.errors.count, "error")} prohibited this bus_stop from being saved:"
+      %ul
+        - @bus_stop.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.input :name
+  .actions
+    = f.submit 'Save'

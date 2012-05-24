@@ -1,0 +1,217 @@
+.form-title
+  Create new route
+%br
+
+.inside
+
+  #map_canvas{:style=> "width:100%; height:100%; height: 500px;"}
+
+  #clean_route
+    = link_to "Clean map", nil, :remote => true
+  = link_to 'Back', bus_stops_path
+
+  
+
+:javascript
+
+  var lat;
+  var lng;
+
+  window.onload = init;
+
+  var pathCoordinates = [];
+  var pathIds = [];
+  var path = new google.maps.Polyline({
+    path: pathCoordinates,
+    strokeColor: "#FF0000",
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+
+  function init(){
+    $.getJSON(
+      'http://localhost:3000/bus_stops/',
+      function(data) {
+        for (var i = 0; i < data.length; i++ ) {
+          var latLng = new google.maps.LatLng(data[i]["lat"],data[i]["lon"]);
+          var marker = placeMarkerStart(latLng, data[i]["name"], data[i]["id"]);
+        }
+      }
+    );
+    gmaps_initialize();
+    google.maps.event.addListener(map, 'click', function(event) {
+      var marker = placeMarker(event.latLng);
+      lat = event.latLng.lat();
+      lng = event.latLng.lng();
+      prompt_user_create(marker);
+      pathCoordinates.push(marker.position);
+      path.setMap(null);
+      path = new google.maps.Polyline({
+        path: pathCoordinates,
+        strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
+      path.setMap(map);
+    });
+    google.maps.event.addListener(map, 'rightclick', function(event) {
+      var marker = placeMarker(event.latLng);
+      lat = event.latLng.lat();
+      lng = event.latLng.lng();
+      prompt_user_create(marker);
+    });
+  }; 
+
+  $('#clean_route').click(function() {    
+    clearOverlays();
+  });
+
+  function placeMarker(location) {
+    var marker = new google.maps.Marker({
+        position: location, 
+        animation: google.maps.Animation.BOUNCE,
+        map: map
+    });
+    markersArray.push([marker]);
+    google.maps.event.addListener(marker, 'click', function() {
+      pathCoordinates.push(marker.position);
+      for(var i=0; i < markersArray.length; i++){
+        var temp = markersArray[i]
+        if(temp[0] == marker){
+          pathIds.push(temp[1]);
+          break;
+        }
+      }
+      path.setMap(null);
+      path = new google.maps.Polyline({
+        path: pathCoordinates,
+        strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
+      path.setMap(map);
+      if(marker.position == pathCoordinates[0] && pathCoordinates.length > 1)
+        promptUserCreateRoute();
+    });
+    return marker;
+  };
+
+  function placeMarkerStart(location, stopName, id) {
+    var marker = new google.maps.Marker({
+        position: location, 
+        animation: null,
+        map: map,
+    });
+    marker.setTitle(stopName);
+    markersArray.push([marker, id]);
+    google.maps.event.addListener(marker, 'click', function() {
+      pathCoordinates.push(marker.position);
+      for(var i=0; i < markersArray.length; i++){
+        var temp = markersArray[i]
+        if(temp[0] == marker){
+          pathIds.push(temp[1]);
+          break;
+        }
+      }
+      path.setMap(null);
+      path = new google.maps.Polyline({
+        path: pathCoordinates,
+        strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
+      path.setMap(map);
+      if(marker.position == pathCoordinates[0] && pathCoordinates.length > 1)
+        promptUserCreateRoute();
+    });
+  };
+
+  function prompt_user_create(marker) {
+    var b = new Boxy("<input type=\"text\" id=\"bus-stop-name-input\"/><input type=\"submit\" id=\"dialog-accept\" value=\"\"/>", {modal: 'true', title: "Create new bus stop"});
+    $('#dialog-accept').click(
+      function(){
+        $.ajax({
+          url: 'http://localhost:3000/bus_stops/',
+          type: 'POST',
+          data: {
+            'bus_stop[name]': $('#bus-stop-name-input').val(),
+            'bus_stop[lat]': lat,
+            'bus_stop[lon]': lng,
+          },
+          dataType: 'json',
+          success: function(){
+            $.getJSON(
+              'http://localhost:3000/bus_stops/',
+              function(data) {
+                var i = data.length-1;
+                // var latLng = new google.maps.LatLng(data[i]["lat"],data[i]["lon"]);
+                // markersArray[markersArray.length-1].push(latLng);
+                markersArray[markersArray.length-1].push(data[i]["id"]);
+                for(var i=0; i < markersArray.length; i++){
+                  var temp = markersArray[i]
+                  if(temp[0] == marker){
+                    pathIds.push(temp[1]);
+                    break;
+                  }
+                }
+              }
+            );
+            //pathCoordinates.push(marker.position);
+          }
+        })
+        b.hideAndUnload();
+        marker.setAnimation(null);
+        marker.setTitle($('#bus-stop-name-input').val());
+      }
+    );
+    $('.close').click(
+      function(){
+        removeLastMarker();
+        pathCoordinates.pop();
+        path.setMap(null);
+        path = new google.maps.Polyline({
+          path: pathCoordinates,
+          strokeColor: "#FF0000",
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+        path.setMap(map);
+        b.hideAndUnload();
+      }
+    );
+  }
+
+  function removeLastMarker() {
+    if (markersArray) {
+      markersArray.pop()[0].setMap(null);
+    }
+  }
+
+  function promptUserCreateRoute(){
+    var b = new Boxy("<input type=\"text\" id=\"bus-stop-name-input\"/><input type=\"submit\" id=\"dialog-accept\" value=\"\"/>", {modal: 'true', title: "Create new route"});
+    $('.close').click(
+      function(){
+        pathCoordinates = [];
+        path.setMap(null);
+        b.hideAndUnload();
+      }
+    );
+
+    $('#dialog-accept').click(
+      function(){
+        $.ajax({
+          url: 'http://localhost:3000/buses/',
+          type: 'POST',
+          data: {
+            'bus[name]': $('#bus-stop-name-input').val(),
+            stops : pathIds.join(',')
+          },
+          dataType: 'json',
+          success: function(){
+            window.location = "/buses";
+          }
+        })
+        b.hideAndUnload();
+      }
+    );
+  }
