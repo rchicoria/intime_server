@@ -5,6 +5,7 @@ group :development, :test do
 end
 group :production do
   gem 'pg'
+  gem 'heroku'
 end
 group :assets do
   gem 'sass-rails',   '~> 3.1.4'
