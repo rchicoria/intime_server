@@ -79,7 +79,7 @@
     $('#dialog-accept').click(
       function(){
         $.ajax({
-          url: 'http://ec2-75-101-189-134.compute-1.amazonaws.com:3000/bus_stops/',
+          url: '/bus_stops/',
           type: 'POST',
           data: {
             'bus_stop[name]': $('#bus-stop-name-input').val(),
