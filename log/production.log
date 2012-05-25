@@ -1,0 +1,218 @@
+
+
+Started GET "/buses" for 127.0.0.1 at 2012-05-25 17:21:15 +0100
+  Processing by BusesController#index as HTML
+Redirected to http://localhost:3000/users/sign_in
+Completed 302 Found in 13ms
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2012-05-25 17:21:15 +0100
+  Processing by Devise::SessionsController#new as HTML
+Completed 500 Internal Server Error in 1ms
+
+ActiveRecord::StatementInvalid (Could not find table 'users'):
+  
+
+Rendered /home/rchicoria/.rvm/gems/ruby-1.9.2-p290/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.erb (2.9ms)
+Rendered /home/rchicoria/.rvm/gems/ruby-1.9.2-p290/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.1ms)
+Rendered /home/rchicoria/.rvm/gems/ruby-1.9.2-p290/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (11.0ms)
+Migrating to DeviseCreateUsers (20120425172550)
+Migrating to RolifyCreateRoles (20120425172613)
+Migrating to AddNameToUsers (20120425172625)
+Migrating to AddConfirmableToUsers (20120425172637)
+Migrating to DeviseInvitableAddToUsers (20120425172718)
+Migrating to CreateBuses (20120425181939)
+Migrating to CreateBusStops (20120425182019)
+Migrating to CreateStopPositions (20120509180132)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2012-05-25 17:22:56 +0100
+  Processing by Devise::SessionsController#new as HTML
+Rendered devise/shared/_links.erb (1.9ms)
+Rendered devise/sessions/new.html.haml within layouts/application (23.2ms)
+Completed 500 Internal Server Error in 230ms
+
+ActionView::Template::Error (application.css isn't precompiled):
+    7:     %title= content_for?(:title) ? yield(:title) : "Intime Server"
+    8:     %meta{:content => "", :name => "description"}
+    9:     %meta{:content => "", :name => "author"}
+    10:     = stylesheet_link_tag    "application", :media => "all"
+    11:     = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
+    12:     = javascript_include_tag "application"
+    13:     = csrf_meta_tags
+  app/views/layouts/application.html.haml:10:in `_app_views_layouts_application_html_haml__4001760052372143689_43493420'
+
+Rendered /home/rchicoria/.rvm/gems/ruby-1.9.2-p290/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.erb (2.7ms)
+Rendered /home/rchicoria/.rvm/gems/ruby-1.9.2-p290/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.1ms)
+Rendered /home/rchicoria/.rvm/gems/ruby-1.9.2-p290/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (9.1ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2012-05-25 17:26:15 +0100
+  Processing by Devise::SessionsController#new as HTML
+Rendered devise/shared/_links.erb (2.0ms)
+Rendered devise/sessions/new.html.haml within layouts/application (67.3ms)
+Compiled application.css  (74ms)  (pid 4945)
+Compiled bootstrap_and_overrides.css  (1698ms)  (pid 4945)
+Compiled boxy.css  (16ms)  (pid 4945)
+Compiled home.css  (34ms)  (pid 4945)
+Compiled users.css  (1ms)  (pid 4945)
+Compiled application.js  (332ms)  (pid 4945)
+Compiled jquery.js  (20ms)  (pid 4945)
+Compiled jquery_ujs.js  (1ms)  (pid 4945)
+Compiled bootstrap.js  (32ms)  (pid 4945)
+Compiled bootstrap-transition.js  (0ms)  (pid 4945)
+Compiled bootstrap-alert.js  (0ms)  (pid 4945)
+Compiled bootstrap-button.js  (0ms)  (pid 4945)
+Compiled bootstrap-carousel.js  (0ms)  (pid 4945)
+Compiled bootstrap-collapse.js  (0ms)  (pid 4945)
+Compiled bootstrap-dropdown.js  (0ms)  (pid 4945)
+Compiled bootstrap-modal.js  (0ms)  (pid 4945)
+Compiled bootstrap-scrollspy.js  (0ms)  (pid 4945)
+Compiled bootstrap-tab.js  (0ms)  (pid 4945)
+Compiled bootstrap-tooltip.js  (0ms)  (pid 4945)
+Compiled bootstrap-popover.js  (0ms)  (pid 4945)
+Compiled bootstrap-typeahead.js  (0ms)  (pid 4945)
+Compiled gmap3.js  (24ms)  (pid 4945)
+Compiled home.js  (596ms)  (pid 4945)
+Compiled jquery.boxy.js  (56ms)  (pid 4945)
+Compiled users.js  (154ms)  (pid 4945)
+Rendered layouts/_navigation.html.haml (5.2ms)
+Completed 200 OK in 10538ms (Views: 10446.7ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/application-f4d9c7049a6e4c3d85a20497a73147bf.css" for 127.0.0.1 at 2012-05-25 17:26:26 +0100
+Served asset /application-f4d9c7049a6e4c3d85a20497a73147bf.css - 200 OK (1ms)
+
+
+Started GET "/assets/application-b07ef07c7471be4dc48dbd9fa16bfcd5.js" for 127.0.0.1 at 2012-05-25 17:26:26 +0100
+Served asset /application-b07ef07c7471be4dc48dbd9fa16bfcd5.js - 200 OK (1ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2012-05-25 17:26:31 +0100
+  Processing by Devise::RegistrationsController#new as HTML
+Rendered devise/_links.erb (1.5ms)
+Rendered devise/registrations/new.html.haml within layouts/application (10.1ms)
+Rendered layouts/_navigation.html.haml (0.9ms)
+Completed 200 OK in 19ms (Views: 18.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2012-05-25 17:26:42 +0100
+  Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"FKnUHQCloN0A735vSUhGnQHGWDZJ4r+a0Lm29wGmU1Y=", "user"=>{"name"=>"Rui Chicória", "email"=>"rchicoria@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+Binary data inserted for `string` type on column `encrypted_password`
+Rendered devise/mailer/confirmation_instructions.html.erb (1.0ms)
+
+Sent mail to rchicoria@gmail.com (7821ms)
+Redirected to http://localhost:3000/
+Completed 302 Found in 8672ms
+
+
+Started GET "/" for 127.0.0.1 at 2012-05-25 17:26:51 +0100
+  Processing by BusesController#index as HTML
+Completed 401 Unauthorized in 0ms
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2012-05-25 17:26:51 +0100
+  Processing by Devise::SessionsController#new as HTML
+Rendered devise/shared/_links.erb (2.2ms)
+Rendered devise/sessions/new.html.haml within layouts/application (6.2ms)
+Rendered layouts/_navigation.html.haml (0.9ms)
+Completed 200 OK in 10ms (Views: 9.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/confirmation?confirmation_token=KYezfxFBy2uWVpsWxrPD" for 127.0.0.1 at 2012-05-25 17:27:17 +0100
+  Processing by Devise::ConfirmationsController#show as HTML
+  Parameters: {"confirmation_token"=>"KYezfxFBy2uWVpsWxrPD"}
+Redirected to http://localhost:3000/
+Completed 302 Found in 227ms
+
+
+Started GET "/" for 127.0.0.1 at 2012-05-25 17:27:17 +0100
+  Processing by BusesController#index as HTML
+Rendered buses/index.html.haml within layouts/application (8.4ms)
+Rendered layouts/_navigation.html.haml (175.8ms)
+Completed 200 OK in 195ms (Views: 192.3ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/buses/new" for 127.0.0.1 at 2012-05-25 17:27:23 +0100
+  Processing by BusesController#new as HTML
+Rendered buses/new.html.haml within layouts/application (11.8ms)
+Rendered layouts/_navigation.html.haml (2.8ms)
+Completed 200 OK in 20ms (Views: 17.2ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/bus_stops/" for 127.0.0.1 at 2012-05-25 17:27:24 +0100
+  Processing by BusStopsController#index as JSON
+Completed 200 OK in 7ms (Views: 2.2ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/assets/boxy-nw.png" for 127.0.0.1 at 2012-05-25 17:27:25 +0100
+Served asset /boxy-nw.png - 304 Not Modified (3ms)
+
+
+Started GET "/assets/boxy-sw.png" for 127.0.0.1 at 2012-05-25 17:27:25 +0100
+Served asset /boxy-sw.png - 304 Not Modified (9ms)
+
+
+Started GET "/assets/boxy-ne.png" for 127.0.0.1 at 2012-05-25 17:27:25 +0100
+Served asset /boxy-ne.png - 304 Not Modified (2ms)
+
+
+Started GET "/assets/boxy-se.png" for 127.0.0.1 at 2012-05-25 17:27:25 +0100
+Served asset /boxy-se.png - 304 Not Modified (3ms)
+
+
+Started GET "/assets/tick.png" for 127.0.0.1 at 2012-05-25 17:27:25 +0100
+Served asset /tick.png - 304 Not Modified (2ms)
+
+
+Started POST "/bus_stops/" for 127.0.0.1 at 2012-05-25 17:27:28 +0100
+  Processing by BusStopsController#create as JSON
+  Parameters: {"bus_stop"=>{"name"=>"sdaf", "lat"=>"40.20623052352721", "lon"=>"-8.426750116455082"}}
+Completed 201 Created in 139ms (Views: 3.5ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/bus_stops/" for 127.0.0.1 at 2012-05-25 17:27:28 +0100
+  Processing by BusStopsController#index as JSON
+Completed 200 OK in 3ms (Views: 0.7ms | ActiveRecord: 0.4ms)
+
+
+Started POST "/bus_stops/" for 127.0.0.1 at 2012-05-25 17:27:30 +0100
+  Processing by BusStopsController#create as JSON
+  Parameters: {"bus_stop"=>{"name"=>"dfsafsdf", "lat"=>"40.215865852403695", "lon"=>"-8.424346857177738"}}
+Completed 201 Created in 103ms (Views: 1.2ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/bus_stops/" for 127.0.0.1 at 2012-05-25 17:27:31 +0100
+  Processing by BusStopsController#index as JSON
+Completed 200 OK in 4ms (Views: 1.2ms | ActiveRecord: 0.6ms)
+
+
+Started POST "/bus_stops/" for 127.0.0.1 at 2012-05-25 17:27:33 +0100
+  Processing by BusStopsController#create as JSON
+  Parameters: {"bus_stop"=>{"name"=>"sdfa", "lat"=>"40.215669226731706", "lon"=>"-8.402030878173832"}}
+Completed 201 Created in 126ms (Views: 1.8ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/bus_stops/" for 127.0.0.1 at 2012-05-25 17:27:33 +0100
+  Processing by BusStopsController#index as JSON
+Completed 200 OK in 4ms (Views: 1.8ms | ActiveRecord: 0.6ms)
+
+
+Started POST "/buses/" for 127.0.0.1 at 2012-05-25 17:27:37 +0100
+  Processing by BusesController#create as JSON
+  Parameters: {"bus"=>{"name"=>"sadfgadsg"}, "stops"=>"1,2,3,1"}
+Completed 201 Created in 317ms (Views: 2.9ms | ActiveRecord: 18.9ms)
+
+
+Started GET "/buses" for 127.0.0.1 at 2012-05-25 17:27:37 +0100
+  Processing by BusesController#index as HTML
+Rendered buses/index.html.haml within layouts/application (2.8ms)
+Rendered layouts/_navigation.html.haml (6.1ms)
+Completed 200 OK in 18ms (Views: 14.7ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/buses/1" for 127.0.0.1 at 2012-05-25 17:27:42 +0100
+  Processing by BusesController#show as JSON
+  Parameters: {"id"=>"1"}
+Completed 200 OK in 81ms (Views: 0.8ms | ActiveRecord: 2.5ms)
