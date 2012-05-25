@@ -30,7 +30,7 @@
 
   function init(){
     $.getJSON(
-      '/bus_stops/',
+      'http://ec2-75-101-189-134.compute-1.amazonaws.com:3000/bus_stops/',
       function(data) {
         for (var i = 0; i < data.length; i++ ) {
           var latLng = new google.maps.LatLng(data[i]["lat"],data[i]["lon"]);
@@ -131,7 +131,7 @@
     $('#dialog-accept').click(
       function(){
         $.ajax({
-          url: '/bus_stops/',
+          url: 'http://ec2-75-101-189-134.compute-1.amazonaws.com:3000/bus_stops/',
           type: 'POST',
           data: {
             'bus_stop[name]': $('#bus-stop-name-input').val(),
@@ -200,7 +200,7 @@
     $('#dialog-accept').click(
       function(){
         $.ajax({
-          url: '/buses/',
+          url: 'http://ec2-75-101-189-134.compute-1.amazonaws.com:3000/buses/',
           type: 'POST',
           data: {
             'bus[name]': $('#bus-stop-name-input').val(),
