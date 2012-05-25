@@ -21,7 +21,7 @@
 
   function init(){
     $.getJSON(
-      'http://localhost:3000/bus_stops/',
+      '/bus_stops/',
       function(data) {
         for (var i = 0; i < data.length; i++ ) {
           var latLng = new google.maps.LatLng(data[i]["lat"],data[i]["lon"]);
@@ -79,7 +79,7 @@
     $('#dialog-accept').click(
       function(){
         $.ajax({
-          url: 'http://localhost:3000/bus_stops/',
+          url: '/bus_stops/',
           type: 'POST',
           data: {
             'bus_stop[name]': $('#bus-stop-name-input').val(),
@@ -107,7 +107,7 @@
     $('#dialog-accept-edit').click(
       function(){
         $.ajax({
-          url: 'http://localhost:3000/bus_stops/',
+          url: '/bus_stops/',
           type: 'PUT',
           data: {
             'bus_stop[name]': $('#bus-stop-name-input').val(),
@@ -124,7 +124,7 @@
     $('#dialog-delete').click(
       function(){
         $.ajax({
-          url: 'http://localhost:3000/bus_stops/',
+          url: '/bus_stops/',
           type: 'delete',
           data: {
             'find_name':marker.getTitle()

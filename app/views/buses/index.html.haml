@@ -57,7 +57,7 @@
     pathCoordinates = [];
     if (bus_id){
       $.getJSON(
-        'http://localhost:3000/buses/'+bus_id,
+        '/buses/'+bus_id,
         function(data) {
           for (var i = 0; i < data.length; i++ ) {
             //alert(data[i][1]);
