@@ -1,6 +1,12 @@
 source 'http://rubygems.org'
 gem 'rails', '3.1.1'
-gem 'sqlite3'
+group :development, :test do
+  gem 'sqlite3'
+end
+group :production do
+  gem 'pg'
+  gem 'heroku'
+end
 group :assets do
   gem 'sass-rails',   '~> 3.1.4'
   gem 'coffee-rails', '~> 3.1.1'
