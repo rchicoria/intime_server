@@ -2,9 +2,9 @@ class BusStopsController < ApplicationController
   # GET /bus_stops
   # GET /bus_stops.json
 
-  before_filter do
-    authenticate_user! rescue redirect_to new_user_session_path
-  end
+  # before_filter do
+  #   authenticate_user! rescue redirect_to new_user_session_path
+  # end
 
   def index
     @bus_stops = BusStop.all

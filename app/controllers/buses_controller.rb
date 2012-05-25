@@ -1,9 +1,9 @@
 class BusesController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
-  before_filter do
-    authenticate_user! rescue redirect_to new_user_session_path
-  end
+  # before_filter do
+  #   authenticate_user! rescue redirect_to new_user_session_path
+  # end
 
   # GET /buses
   # GET /buses.json
