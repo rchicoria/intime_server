@@ -52,6 +52,12 @@ class BusesController < ApplicationController
     params[:stops].split(',').each do |s|
       t = StopPosition.new
       t.bus_stop_id = s.to_i
+      for hour in (0..23)
+        Day.all.each do |day|
+          delay = Delay.new(day_id: day.id, this_hour: hour, minutes_delayed: 0, precision: 0)
+          t.delays << delay
+        end
+      end
       @bus.stop_positions << t
     end
 
