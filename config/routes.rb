@@ -1,4 +1,6 @@
 IntimeServer::Application.routes.draw do
+  resources :travels
+
   authenticated :user do
     root :to => "buses#index"
   end

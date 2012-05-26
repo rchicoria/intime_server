@@ -10,6 +10,7 @@
 
 class Bus < ActiveRecord::Base
   has_many :stop_positions
+  has_many :travels
 
   validates_presence_of :name
 end

@@ -1,0 +1,23 @@
+%h1 Listing travels
+
+%table
+  %tr
+    %th Start time
+    %th Day
+    %th Bus
+    %th
+    %th
+    %th
+
+  - @travels.each do |travel|
+    %tr
+      %td= travel.start_time
+      %td= travel.day_id
+      %td= travel.bus_id
+      %td= link_to 'Show', travel
+      %td= link_to 'Edit', edit_travel_path(travel)
+      %td= link_to 'Destroy', travel, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Travel', new_travel_path
