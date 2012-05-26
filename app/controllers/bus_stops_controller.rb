@@ -96,7 +96,7 @@ class BusStopsController < ApplicationController
   def get_by_coordinates
     lat = params[:lat]
     lon = params[:lon]
-    @bus_stops = BusStop.where('lat >= (? - 0.0002) and lat <= (? + 0.0002) and lon >= (? - 0.0002) and lon <= (? + 0.0002)', lat, lat, lon, lon)
+    @bus_stops = BusStop.where('lat >= (? - 0.0005) and lat <= (? + 0.0005) and lon >= (? - 0.0005) and lon <= (? + 0.0005)', lat, lat, lon, lon)
     value = []
     @bus_stops.each do |bus_stop|
       buses = []
