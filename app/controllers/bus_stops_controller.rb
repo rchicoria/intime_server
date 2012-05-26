@@ -96,9 +96,23 @@ class BusStopsController < ApplicationController
   def get_by_coordinates
     lat = params[:lat]
     lon = params[:lon]
-    @bus_stops = BusStop.where('lat >= (? - 0.00001) and lat <= (? + 0.00001) and lon >= (? - 0.00001) and lon <= (? + 0.00001)', lat, lat, lon, lon)
+    @bus_stops = BusStop.where('lat >= (? - 0.0005) and lat <= (? + 0.0005) and lon >= (? - 0.0005) and lon <= (? + 0.0005)', lat, lat, lon, lon)
+    value = []
+    @bus_stops.each do |bus_stop|
+      buses = []
+      t = {}
+      t["name"] = bus_stop.name
+      StopPosition.where('bus_stop_id = ?', bus_stop.id).each do |stop_position|
+        bmap = {}
+        bmap["id"] = stop_position.bus.id
+        bmap["name"] = stop_position.bus.name
+        buses << bmap
+      end
+      t["buses"] = buses
+      value << t
+    end
     respond_to do |format|
-      format.json { render json: @bus_stops }
+      format.json { render json: value }
     end
   end
 end
