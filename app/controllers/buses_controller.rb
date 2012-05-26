@@ -52,8 +52,10 @@ class BusesController < ApplicationController
     params[:stops].split(',').each do |s|
       t = StopPosition.new
       t.bus_stop_id = s.to_i
-      @bus.stop_positions << t[0:-1]
+      @bus.stop_positions << t
     end
+
+    @bus.stop_positions.pop
 
     respond_to do |format|
       if @bus.save
