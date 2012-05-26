@@ -49,21 +49,30 @@ class BusesController < ApplicationController
     puts params.inspect
     @bus = Bus.new(params[:bus])
 
-    params[:stops].split(',').each do |s|
-      t = StopPosition.new
-      t.bus_stop_id = s.to_i
-      t.save
-      for hour in (0..23)
-        Day.all.each do |day|
-          delay = Delay.new(stop_position_id: t.id, day_id: day.id, this_hour: hour, minutes_delayed: 0, precision: 0)
-          delay.save
-        end
-      end
-      @bus.stop_positions << t
-    end
+    # params[:stops].split(',').each do |s|
+    #   t = StopPosition.new
+    #   t.bus_stop_id = s.to_i
+    #   t.save
+    #   for hour in (0..23)
+    #     Day.all.each do |day|
+    #       delay = Delay.new(stop_position_id: t.id, day_id: day.id, this_hour: hour, minutes_delayed: 0, precision: 0)
+    #     end
+    #   end
+    #   @bus.stop_positions << t
+    # end
 
     respond_to do |format|
       if @bus.save
+        params[:stops].split(',').each do |s|
+          t = StopPosition.new(bus_stop_id: s.to_i, bus_id: @bus.id)
+          t.save
+          for hour in (0..23)
+            Day.all.each do |day|
+              delay = Delay.create(stop_position_id: t.id, day_id: day.id, this_hour: hour, minutes_delayed: 0, precision: 0)
+              delay.save
+            end
+          end
+        end
         format.html { redirect_to @bus, notice: 'Bus was successfully created.' }
         format.json { render json: @bus, status: :created, location: @bus }
       else
