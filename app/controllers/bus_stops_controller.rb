@@ -2,9 +2,9 @@ class BusStopsController < ApplicationController
   # GET /bus_stops
   # GET /bus_stops.json
 
-  before_filter do
-    authenticate_user! rescue redirect_to new_user_session_path
-  end
+  # before_filter do
+  #   authenticate_user! rescue redirect_to new_user_session_path
+  # end
 
   def index
     @bus_stops = BusStop.all
@@ -90,6 +90,29 @@ class BusStopsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to bus_stops_url }
       format.json { head :ok }
+    end
+  end
+
+  def get_by_coordinates
+    lat = params[:lat]
+    lon = params[:lon]
+    @bus_stops = BusStop.where('lat >= (? - 0.0005) and lat <= (? + 0.0005) and lon >= (? - 0.0005) and lon <= (? + 0.0005)', lat, lat, lon, lon)
+    value = []
+    @bus_stops.each do |bus_stop|
+      buses = []
+      t = {}
+      t["name"] = bus_stop.name
+      StopPosition.where('bus_stop_id = ?', bus_stop.id).each do |stop_position|
+        bmap = {}
+        bmap["id"] = stop_position.bus.id
+        bmap["name"] = stop_position.bus.name
+        buses << bmap
+      end
+      t["buses"] = buses.uniq
+      value << t
+    end
+    respond_to do |format|
+      format.json { render json: value }
     end
   end
 end

@@ -13,4 +13,6 @@ IntimeServer::Application.routes.draw do
   match 'bus_stops' => 'bus_stops#destroy', :via => :delete
 
   resources :arrivals
+
+  match "/bus_stops_by_coordinates" => "bus_stops#get_by_coordinates"
 end
