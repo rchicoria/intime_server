@@ -12,8 +12,8 @@
   - @travels.each do |travel|
     %tr
       %td= travel.start_time.strftime("%I:%M%p")
-      %td= travel.day
-      %td= travel.bus
+      %td= travel.day.name
+      %td= travel.bus.name
       %td= link_to 'Show', travel
       %td= link_to 'Edit', edit_travel_path(travel)
       %td= link_to 'Destroy', travel, :confirm => 'Are you sure?', :method => :delete
