@@ -1,3 +1,5 @@
 /db/production*
 /log/*
 /tmp/cache/*
+/tmp/*
+/db/*.sqlite3

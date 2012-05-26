@@ -14,7 +14,7 @@ IntimeServer::Application.configure do
   config.action_controller.perform_caching = false
 
   # ActionMailer Config
-  config.action_mailer.default_url_options = { :host => '' }
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   config.action_mailer.delivery_method = :smtp
   # change to false to prevent email from being sent during development
   config.action_mailer.perform_deliveries = true

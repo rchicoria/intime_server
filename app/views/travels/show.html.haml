@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Start time:
+  = @travel.start_time
+%p
+  %b Day:
+  = @travel.day_id
+%p
+  %b Bus:
+  = @travel.bus_id
+
+= link_to 'Edit', edit_travel_path(@travel)
+\|
+= link_to 'Back', travels_path
