@@ -52,17 +52,20 @@ class BusesController < ApplicationController
     params[:stops].split(',').each do |s|
       t = StopPosition.new
       t.bus_stop_id = s.to_i
-      for hour in (0..23)
-        Day.all.each do |day|
-          delay = Delay.new(day_id: day.id, this_hour: hour, minutes_delayed: 0, precision: 0)
-          t.delays << delay
-        end
-      end
       @bus.stop_positions << t
     end
 
     respond_to do |format|
       if @bus.save
+        @bus.stop_positions.each do |t|
+          for hour in (0..23)
+            Day.all.each do |day|
+              delay = Delay.new(day_id: day.id, this_hour: hour, minutes_delayed: 0, precision: 0)
+              t.delays << delay
+            end
+          end
+        end
+        @bus.save
         format.html { redirect_to @bus, notice: 'Bus was successfully created.' }
         format.json { render json: @bus, status: :created, location: @bus }
       else
