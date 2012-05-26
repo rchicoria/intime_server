@@ -55,8 +55,7 @@ class BusesController < ApplicationController
       t.save
       for hour in (0..23)
         Day.all.each do |day|
-          delay = Delay.new(day_id: day.id, this_hour: hour, minutes_delayed: 0, precision: 0)
-          t.delays << delay
+          delay = Delay.new(stop_position_id: t.id, day_id: day.id, this_hour: hour, minutes_delayed: 0, precision: 0)
         end
       end
       @bus.stop_positions << t
