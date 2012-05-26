@@ -92,4 +92,13 @@ class BusStopsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  def get_by_coordinates
+    lat = params[:lat]
+    lon = params[:lon]
+    @bus_stops = BusStop.where('lat >= (? - 0.00001) and lat <= (? + 0.00001) and lon >= (? - 0.00001) and lon <= (? + 0.00001)', lat, lat, lon, lon)
+    respond_to do |format|
+      format.json { render json: @bus_stops }
+    end
+  end
 end
