@@ -108,7 +108,7 @@ class BusStopsController < ApplicationController
         bmap["name"] = stop_position.bus.name
         buses << bmap
       end
-      t["buses"] = buses
+      t["buses"] = buses.uniq
       value << t
     end
     respond_to do |format|

@@ -55,8 +55,6 @@ class BusesController < ApplicationController
       @bus.stop_positions << t
     end
 
-    @bus.stop_positions.pop
-
     respond_to do |format|
       if @bus.save
         format.html { redirect_to @bus, notice: 'Bus was successfully created.' }
