@@ -5,10 +5,10 @@
   = @travel.start_time.strftime("%I:%M%p")
 %p
   %b Day:
-  = @travel.day
+  = @travel.day.name
 %p
   %b Bus:
-  = @travel.bus
+  = @travel.bus.name
 
 = link_to 'Edit', edit_travel_path(@travel)
 \|
