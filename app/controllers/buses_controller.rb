@@ -128,9 +128,9 @@ class BusesController < ApplicationController
       t["bus_stops"] << bmap if t["bus_stops"].index(bmap).nil?
     end
     while t["bus_stops"].first["id"] != bus_stop.id
-      t["bus_stops"] << t["bus_stops"].pop(0)
+      t["bus_stops"] << t["bus_stops"].delete_at(0)
     end
-    t["bus_stops"] << t["bus_stops"].pop(0)
+    t["bus_stops"] << t["bus_stops"].delete_at(0)
     value << t
     respond_to do |format|
       format.json { render json: value }
