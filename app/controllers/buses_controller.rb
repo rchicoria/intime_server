@@ -112,7 +112,8 @@ class BusesController < ApplicationController
 
   # Check in
   def check_in
-    bus = Bus.find(params[:id])
+    bus = Bus.find(params[:bus_id])
+    bus_stop = BusStop.find(params[:bus_stop_id])
     value = []
     t = {}
     t["id"] = bus.id
