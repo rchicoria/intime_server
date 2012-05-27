@@ -127,4 +127,5 @@ class BusesController < ApplicationController
     respond_to do |format|
       format.json { render json: value }
     end
+  end
 end
