@@ -117,6 +117,7 @@ class BusesController < ApplicationController
     t = {}
     t["id"] = bus.id
     t["name"] = bus.name
+    t["bus_stops"] = []
     StopPosition.where('bus_id = ?', bus.id).each do |stop_position|
       bmap = {}
       bmap["id"] = stop_position.bus_stop.id
