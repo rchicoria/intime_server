@@ -122,7 +122,7 @@ class BusesController < ApplicationController
       bmap = {}
       bmap["id"] = stop_position.bus_stop.id
       bmap["name"] = stop_position.bus_stop.name
-      t["bus_stops"] << bmap if t["bus_stops"].index(bmap) < 0
+      t["bus_stops"] << bmap if t["bus_stops"].index(bmap).nil?
     end
     value << t
     respond_to do |format|
