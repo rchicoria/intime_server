@@ -129,6 +129,7 @@ class BusesController < ApplicationController
     end
     while t["bus_stops"].first["id"] != bus_stop.id
       t["bus_stops"] << t["bus_stops"].pop(0)
+    end
     t["bus_stops"] << t["bus_stops"].pop(0)
     value << t
     respond_to do |format|
