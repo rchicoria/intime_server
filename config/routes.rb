@@ -17,4 +17,5 @@ IntimeServer::Application.routes.draw do
   resources :arrivals
 
   match "/bus_stops_by_coordinates" => "bus_stops#get_by_coordinates"
+  match "/check_in" => "buses#check_in"
 end
