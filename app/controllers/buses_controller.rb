@@ -112,28 +112,25 @@ class BusesController < ApplicationController
 
   # Check in
   def check_in
-    puts 1
     bus = Bus.find(params[:bus_id])
-    puts 2
     bus_stop = BusStop.find(params[:bus_stop_id])
-    puts 3
     value = []
     t = {}
     t["id"] = bus.id
     t["name"] = bus.name
     t["bus_stops"] = []
-    # StopPosition.where('bus_id = ?', bus.id).each do |stop_position|
-    #   bmap = {}
-    #   bmap["id"] = stop_position.bus_stop.id
-    #   bmap["name"] = stop_position.bus_stop.name
-    #   bmap["lat"] = stop_position.bus_stop.lat
-    #   bmap["lon"] = stop_position.bus_stop.lon
-    #   t["bus_stops"] << bmap if t["bus_stops"].index(bmap).nil?
-    # end
-    # while t["bus_stops"].first["id"] != bus_stop.id
-    #   t["bus_stops"] << t["bus_stops"].delete_at(0)
-    # end
-    # t["bus_stops"] << t["bus_stops"].delete_at(0)
+    StopPosition.where('bus_id = ?', bus.id).each do |stop_position|
+      bmap = {}
+      bmap["id"] = stop_position.bus_stop.id
+      bmap["name"] = stop_position.bus_stop.name
+      bmap["lat"] = stop_position.bus_stop.lat
+      bmap["lon"] = stop_position.bus_stop.lon
+      t["bus_stops"] << bmap if t["bus_stops"].index(bmap).nil?
+    end
+    while t["bus_stops"].first["id"] != bus_stop.id
+      t["bus_stops"] << t["bus_stops"].delete_at(0)
+    end
+    t["bus_stops"] << t["bus_stops"].delete_at(0)
     value << t
     respond_to do |format|
       format.json { render json: value }
