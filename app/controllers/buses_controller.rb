@@ -122,8 +122,8 @@ class BusesController < ApplicationController
       bmap = {}
       bmap["id"] = stop_position.bus_stop.id
       bmap["name"] = stop_position.bus_stop.name
-      bmap["lat"] = stop_postion.bus_stop.lat
-      bmap["lon"] = stop_postion.bus_stop.lon
+      bmap["lat"] = stop_position.bus_stop.lat
+      bmap["lon"] = stop_position.bus_stop.lon
       t["bus_stops"] << bmap if t["bus_stops"].index(bmap).nil?
     end
     value << t
