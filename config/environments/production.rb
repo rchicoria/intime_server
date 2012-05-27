@@ -58,7 +58,7 @@ IntimeServer::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.action_mailer.default_url_options = { :host => 'http://ec2-23-20-61-43.compute-1.amazonaws.com:3000/' }
+  config.action_mailer.default_url_options = { :host => 'ec2-23-20-61-43.compute-1.amazonaws.com:3000/' }
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised
   config.action_mailer.delivery_method = :smtp
