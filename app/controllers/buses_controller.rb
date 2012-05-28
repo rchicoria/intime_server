@@ -140,7 +140,7 @@ class BusesController < ApplicationController
   # Check out
   def check_out
     bus = Bus.find(params[:bus_id])
-    bus_stop = BusStop.find(params[:bus_stop])
+    bus_stop = BusStop.find(params[:bus_stop_id])
     value = []
     t = {}
     t["id"] = bus_stop.id
