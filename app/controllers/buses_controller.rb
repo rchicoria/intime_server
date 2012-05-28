@@ -111,33 +111,25 @@ class BusesController < ApplicationController
   end
 
   # Check in
+  # Used when a user enters a bus
   def check_in
-    bus = Bus.find(params[:bus_id])
-    bus_stop = BusStop.find(params[:bus_stop_id])
-    value = []
-    t = {}
-    t["id"] = bus.id
-    t["name"] = bus.name
-    t["bus_stops"] = []
-    StopPosition.where('bus_id = ?', bus.id).each do |stop_position|
-      bmap = {}
-      bmap["id"] = stop_position.bus_stop.id
-      bmap["name"] = stop_position.bus_stop.name
-      bmap["lat"] = stop_position.bus_stop.lat
-      bmap["lon"] = stop_position.bus_stop.lon
-      t["bus_stops"] << bmap if t["bus_stops"].index(bmap).nil?
+    value = get_bus_stops_from_bus(Bus.find(params[:bus_id]), BusStop.find(params[:bus_stop_id]))
+    respond_to do |format|
+      format.json { render json: value }
     end
-    while t["bus_stops"].first["id"] != bus_stop.id
-      t["bus_stops"] << t["bus_stops"].delete_at(0)
-    end
-    t["bus_stops"] << t["bus_stops"].delete_at(0)
-    value << t
+  end
+
+  # Ping
+  # Used to trace user's path when travelling in a bus
+  def ping
+    value = get_bus_stops_from_bus(Bus.find(params[:bus_id]), BusStop.find(params[:bus_stop_id]))
     respond_to do |format|
       format.json { render json: value }
     end
   end
 
   # Check out
+  # Used when a user leaves a bus and gets in a bus stop
   def check_out
     bus = Bus.find(params[:bus_id])
     bus_stop = BusStop.find(params[:bus_stop_id])
@@ -157,4 +149,29 @@ class BusesController < ApplicationController
       format.json { render json: value }
     end
   end
+
+  private
+
+    def get_bus_stops_from_bus(bus, bus_stop)
+      value = []
+      t = {}
+      t["id"] = bus.id
+      t["name"] = bus.name
+      t["bus_stops"] = []
+      StopPosition.where('bus_id = ?', bus.id).each do |stop_position|
+        bmap = {}
+        bmap["id"] = stop_position.bus_stop.id
+        bmap["name"] = stop_position.bus_stop.name
+        bmap["lat"] = stop_position.bus_stop.lat
+        bmap["lon"] = stop_position.bus_stop.lon
+        t["bus_stops"] << bmap if t["bus_stops"].index(bmap).nil?
+      end
+      while t["bus_stops"].first["id"] != bus_stop.id
+        t["bus_stops"] << t["bus_stops"].delete_at(0)
+      end
+      t["bus_stops"] << t["bus_stops"].delete_at(0)
+      value << t
+      return value
+    end
+
 end
