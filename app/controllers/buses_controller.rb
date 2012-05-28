@@ -157,6 +157,14 @@ class BusesController < ApplicationController
       t = {}
       t["id"] = bus.id
       t["name"] = bus.name
+      current_time = Time.utc(2000, "jan", 1, Time.now.hour, Time.now.min, Time.now.sec)
+      predicted_time = 0
+      # Find the closest travel start time (earlier than now, as late as possible)
+      Travel.where('bus_id = ?', bus.id).each do |travel|
+        time = travel.start_time
+        travel_time = Time.utc(2000, "jan", 1, time.hour, time.min, 0)
+        predicted_time = travel_time if predicted_time == 0 or (travel_time > predicted_time and current_time - travel_time > 0)
+      end
       t["bus_stops"] = []
       StopPosition.where('bus_id = ?', bus.id).each do |stop_position|
         bmap = {}
@@ -164,6 +172,16 @@ class BusesController < ApplicationController
         bmap["name"] = stop_position.bus_stop.name
         bmap["lat"] = stop_position.bus_stop.lat
         bmap["lon"] = stop_position.bus_stop.lon
+        if current_time.saturday?
+          day_id = 2
+        elsif current_time.sunday?
+          day_id = 3
+        else
+          day_id = 1
+        end
+        delay = Delay.where('stop_position_id = ? and this_hour = ? and day_id = ?', stop_position.id, current_time.hour, day_id)
+        # Add the predicted delay to the predicted time (should be > than now if enough data was collected)
+        bmap["predicted_time"] = predicted_time + (delay.minutes_delayed * 60)
         t["bus_stops"] << bmap if t["bus_stops"].index(bmap).nil?
       end
       while t["bus_stops"].first["id"] != bus_stop.id
