@@ -136,4 +136,25 @@ class BusesController < ApplicationController
       format.json { render json: value }
     end
   end
+
+  # Check out
+  def check_out
+    bus = Bus.find(params[:bus_id])
+    bus_stop = BusStop.find(params[:bus_stop])
+    value = []
+    t = {}
+    t["id"] = bus_stop.id
+    t["name"] = bus_stop.name
+    t["buses"] = []
+    StopPosition.where('bus_stop_id = ?', bus_stop.id).each do |stop_position|
+      bmap = {}
+      bmap["id"] = stop_position.bus.id
+      bmap["name"] = stop_position.bus.name
+      t["buses"] << bmap if t["buses"].index(bmap).nil?
+    end
+    value << t
+    respond_to do |format|
+      format.json { render json: value }
+    end
+  end
 end

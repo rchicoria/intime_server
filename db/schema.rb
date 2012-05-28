@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120526154419) do
+ActiveRecord::Schema.define(:version => 20120526172730) do
 
   create_table "bus_stops", :force => true do |t|
     t.string   "name"
@@ -33,6 +33,16 @@ ActiveRecord::Schema.define(:version => 20120526154419) do
     t.datetime "updated_at"
   end
 
+  create_table "delays", :force => true do |t|
+    t.integer  "stop_position_id"
+    t.integer  "day_id"
+    t.integer  "this_hour"
+    t.integer  "minutes_delayed"
+    t.integer  "precision"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.integer  "resource_id"
@@ -48,6 +58,14 @@ ActiveRecord::Schema.define(:version => 20120526154419) do
     t.integer  "bus_id"
     t.integer  "bus_stop_id"
     t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "travels", :force => true do |t|
+    t.time     "start_time"
+    t.integer  "day_id"
+    t.integer  "bus_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
