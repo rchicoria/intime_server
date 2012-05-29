@@ -8,7 +8,7 @@ class StopPosition < ActiveRecord::Base
   def predicted_time()
     return nil if Travel.where('bus_id = ?', bus.id).empty?
     current_time = Time.now
-    delay = Delay.get_delay(stop_position_id, current_time)
+    delay = Delay.get_delay(id, current_time)
     return nil if delay.nil?
     start_time = 0
     Travel.where('bus_id = ?', bus.id).each do |travel|
