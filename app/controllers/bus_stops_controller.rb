@@ -104,9 +104,7 @@ class BusStopsController < ApplicationController
       t["id"] = bus_stop.id
       t["name"] = bus_stop.name
       list = StopPosition.where('bus_stop_id = ?', bus_stop.id)
-      list.pop if list.first.bus_stop.id = list.last.bus_stop.id
-
-      puts "olaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      list.pop if list.first.bus_stop.id = list.last.bus_stop.id and list.length > 1
 
       list.each do |stop_position|
         unless Travel.where('bus_id = ?', stop_position.bus.id).empty?
