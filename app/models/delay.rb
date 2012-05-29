@@ -62,7 +62,7 @@ class Delay < ActiveRecord::Base
       start_time = Time.utc(2000, "jan", 1, start_time.hour, start_time.min, 0)
 
       delay.actual_delay = (current_time - (start_time + delay.minutes_delayed*60))/60
-      delay.actual_delay_timestamp = Time.now
+      delay.actual_delay_timestamp = current_time
 
       delay.minutes_delayed = precision * delay.minutes_delayed + (1 - precision) * ((current_time - start_time)/60).floor
       delay.precision += 1
