@@ -20,10 +20,7 @@ class Delay < ActiveRecord::Base
 
   # Get a certain delay
   def self.get_delay(stop_position_id, current_time)
-    return Delay.where('stop_position_id = ? and this_hour = ? and day_id = ?',
-                        stop_position_id,
-                        Delay.find_newest_travel_time(StopPosition.find(stop_position_id).bus.id, current_time).hour,
-                        Delay.find_day_id(current_time)).first
+    return Delay.where('stop_position_id = ? and this_hour = ? and day_id = ?', stop_position_id, Delay.find_newest_travel_time(StopPosition.find(stop_position_id).bus.id, current_time).hour, Delay.find_day_id(current_time)).first
   end
 
   private
