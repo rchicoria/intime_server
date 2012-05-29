@@ -108,7 +108,7 @@ class BusStopsController < ApplicationController
           bmap = {}
           bmap["id"] = stop_position.bus.id
           bmap["name"] = stop_position.bus.name
-          bmap["predicted_time"] = bus_stop.stop_position.predicted_time
+          bmap["predicted_time"] = stop_position.predicted_time
           buses << bmap
         end
       end
