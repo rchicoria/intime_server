@@ -105,17 +105,23 @@ class BusStopsController < ApplicationController
       t["name"] = bus_stop.name
       list = StopPosition.where('bus_stop_id = ?', bus_stop.id)
       list.pop if list.first.bus_stop.id = list.last.bus_stop.id and list.length > 1
-      previous_stops = []
       list.each do |stop_position|
         unless Travel.where('bus_id = ?', stop_position.bus.id).empty?
           bmap = {}
           bmap["id"] = stop_position.bus.id
           bmap["name"] = stop_position.bus.name
-
+          previous_stops = []
+          bus.stop_positions.each do |previous_stop|
+            if previous_stop == stop_position
+              break
+            else
+              previous_stops << previous_stop
+            end
+          end
           bmap["predicted_time"] = stop_position.predicted_time(previous_stops)
           buses << bmap
         end
-        previous_stops << stop_position
+        
       end
       t["buses"] = buses.uniq
       value << t
