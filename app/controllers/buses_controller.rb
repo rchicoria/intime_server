@@ -165,6 +165,7 @@ class BusesController < ApplicationController
         travel_time = Time.utc(2000, "jan", 1, time.hour, time.min, 0)
         predicted_time = travel_time if predicted_time == 0 or (travel_time > predicted_time and current_time - travel_time > 0)
       end
+      return nil if predicted_time == 0
       t["bus_stops"] = []
       StopPosition.where('bus_id = ?', bus.id).each do |stop_position|
         bmap = {}

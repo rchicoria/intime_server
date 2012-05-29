@@ -104,10 +104,13 @@ class BusStopsController < ApplicationController
       t["id"] = bus_stop.id
       t["name"] = bus_stop.name
       StopPosition.where('bus_stop_id = ?', bus_stop.id).each do |stop_position|
-        bmap = {}
-        bmap["id"] = stop_position.bus.id
-        bmap["name"] = stop_position.bus.name
-        buses << bmap
+        unless Travel.where('bus_id = ?', bus.id).empty?
+          bmap = {}
+          bmap["id"] = stop_position.bus.id
+          bmap["name"] = stop_position.bus.name
+          bmap["predicted_time"] = bus_stop.stop_position.predicted_time
+          buses << bmap
+        end
       end
       t["buses"] = buses.uniq
       value << t
