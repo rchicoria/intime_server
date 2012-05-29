@@ -15,9 +15,9 @@ class StopPosition < ActiveRecord::Base
     else
       day_id = 1
     end
-    delay = Delay.where('stop_position_id = ? and this_hour = ? and day_id = ?', this.id, current_time.hour, day_id).first
+    delay = Delay.where('stop_position_id = ? and this_hour = ? and day_id = ?', id, current_time.hour, day_id).first
     start_time = 0
-    Travel.where('bus_id = ?', this.bus.id).each do |travel|
+    Travel.where('bus_id = ?', bus.id).each do |travel|
       travel_time = Time.utc(2000, "jan", 1, travel.start_time.hour, travel.start_time.min, 0)
       start_time = travel_time if start_time == 0 or (travel_time > start_time and current_time > travel_time)
     end
