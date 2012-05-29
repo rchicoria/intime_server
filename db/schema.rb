@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120526172730) do
+ActiveRecord::Schema.define(:version => 20120529210051) do
 
   create_table "bus_stops", :force => true do |t|
     t.string   "name"
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(:version => 20120526172730) do
     t.integer  "precision"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "actual_delay"
+    t.datetime "actual_delay_timestamp"
   end
 
   create_table "roles", :force => true do |t|
