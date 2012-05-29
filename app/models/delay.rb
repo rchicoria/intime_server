@@ -28,9 +28,10 @@ class Delay < ActiveRecord::Base
     # Helper to create a new delay
     def self.create_new(stop_position_id, current_time)
       start_time = Delay.find_newest_travel_time(StopPosition.find(stop_position_id).bus.id, current_time)
+      day_id = Delay.find_day_id(current_time)
       current_time = Time.utc(2000, "jan", 1, current_time.hour, current_time.min, 0)
       return Delay.create(stop_position_id: stop_position_id,
-                          day_id: Delay.find_day_id(current_time),
+                          day_id: day_id,
                           this_hour: start_time.hour,
                           minutes_delayed: ((current_time - start_time)/60).floor,
                           precision: 1)
