@@ -5,7 +5,7 @@ class Delay < ActiveRecord::Base
   # Get how many minutes the user has to wait
   def remaining_minutes()
     current_time = Time.now
-    start_time = find_newest_travel_time(stop_position.bus.id, current_time)
+    start_time = Delay.find_newest_travel_time(stop_position.bus.id, current_time)
     predicted_time = start_time + minutes_delayed * 60
     return predicted_time - current_time
   end
@@ -22,7 +22,7 @@ class Delay < ActiveRecord::Base
   def self.get_delay(stop_position_id, current_time)
     return Delay.where('stop_position_id = ? and this_hour = ? and day_id = ?',
                         stop_position_id,
-                        find_newest_travel_time(StopPosition.find(stop_position_id).bus.id, current_time).hour,
+                        Delay.find_newest_travel_time(StopPosition.find(stop_position_id).bus.id, current_time).hour,
                         Delay.find_day_id(current_time)).first
   end
 
@@ -30,7 +30,7 @@ class Delay < ActiveRecord::Base
 
     # Helper to create a new delay
     def create_new(stop_position_id, current_time)
-      start_time = find_newest_travel_time(StopPosition.find(stop_position_id).bus.id, current_time)
+      start_time = Delay.find_newest_travel_time(StopPosition.find(stop_position_id).bus.id, current_time)
       return Delay.create(stop_position_id: stop_position_id,
                           day_id: Delay.find_day_id(current_time),
                           this_hour: start_time.hour,
@@ -46,7 +46,7 @@ class Delay < ActiveRecord::Base
     end
 
     # Find the time that the bus started its current travel
-    def find_newest_travel_time(bus_id, current_time)
+    def self.find_newest_travel_time(bus_id, current_time)
       start_time = 0
       Travel.where('bus_id = ?', bus_id).each do |travel|
         travel_time = Time.utc(2000, "jan", 1, travel.start_time.hour, travel.start_time.min, 0)
