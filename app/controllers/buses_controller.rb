@@ -164,6 +164,12 @@ class BusesController < ApplicationController
         t["bus_stops"] << t["bus_stops"].delete_at(0)
       end
       t["bus_stops"] << t["bus_stops"].delete_at(0)
+
+      # Create or update delay
+      delay = Delay.get_or_create_delay(StopPosition.where('bus_id = ? and bus_stop_id = ?', bus.id, bus_stop.id))
+      t["remaining_time"] = delay.remaining_minutes
+      # Falta a parte do update
+
       value << t
       return value
     end
