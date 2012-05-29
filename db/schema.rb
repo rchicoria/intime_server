@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(:version => 20120526172730) do
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
 
-  create_table "stop_positions", :id => false, :force => true do |t|
+  create_table "stop_positions", :force => true do |t|
     t.integer  "bus_id"
     t.integer  "bus_stop_id"
     t.integer  "position"
