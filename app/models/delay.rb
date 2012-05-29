@@ -11,8 +11,8 @@ class Delay < ActiveRecord::Base
   end
 
   # Get the delay for the current time for the desired stop position (and update it)
-  def self.get_or_create_delay(stop_position)
-    current_time = Time.now
+  def self.get_or_create_delay(stop_position, my_time = Time.now)
+    current_time = my_time
     delay = Delay.get_delay(stop_position.id, current_time)
     return Delay.create_new(stop_position.id, current_time) if delay.nil?
     return Delay.updated_delay(delay, current_time)
@@ -58,7 +58,7 @@ class Delay < ActiveRecord::Base
     # Update the delay based on the new information and return it
     def self.updated_delay(delay, current_time)
       precision = [delay.precision*0.1 + 0.4, 0.9].min
-      stat_time = Delay.find_newest_travel_time(delay.stop_position.bus.id, current_time)
+      start_time = Delay.find_newest_travel_time(delay.stop_position.bus.id, current_time)
       delay.minutes_delayed = precision * delay.minutes_delayed + (1 - precision) * ((current_time - start_time)/60).floor
       delay.precision += 1
       delay.save
