@@ -103,7 +103,7 @@ class BusStopsController < ApplicationController
       t = {}
       t["id"] = bus_stop.id
       t["name"] = bus_stop.name
-      StopPosition.where('bus_stop_id = ?', bus_stop.id).each do |stop_position|
+      StopPosition.where('bus_stop_id = ?', bus_stop.id)[0..-2].each do |stop_position|
         unless Travel.where('bus_id = ?', stop_position.bus.id).empty?
           bmap = {}
           bmap["id"] = stop_position.bus.id
