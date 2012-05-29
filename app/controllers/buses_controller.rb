@@ -140,7 +140,7 @@ class BusesController < ApplicationController
     end
 
     # Create or update delay
-    delay = Delay.get_or_create_delay(StopPosition.where('bus_id = ? and bus_stop_id = ?', bus.id, bus_stop.id).first)
+    #delay = Delay.get_or_create_delay(StopPosition.where('bus_id = ? and bus_stop_id = ?', bus.id, bus_stop.id).first)
 
     value << t
     respond_to do |format|
