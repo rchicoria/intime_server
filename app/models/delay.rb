@@ -15,7 +15,7 @@ class Delay < ActiveRecord::Base
     current_time = Time.now
     delay = Delay.get_delay(stop_position.id, current_time)
     return delay unless delay.nil? # Neste momento ainda não actualiza o valor do delay
-    return create_new(stop_position.id, current_time)
+    return Delay.create_new(stop_position.id, current_time)
   end
 
   # Get a certain delay
@@ -29,7 +29,7 @@ class Delay < ActiveRecord::Base
   private
 
     # Helper to create a new delay
-    def create_new(stop_position_id, current_time)
+    def self.create_new(stop_position_id, current_time)
       start_time = Delay.find_newest_travel_time(StopPosition.find(stop_position_id).bus.id, current_time)
       return Delay.create(stop_position_id: stop_position_id,
                           day_id: Delay.find_day_id(current_time),
