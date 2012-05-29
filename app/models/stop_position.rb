@@ -16,12 +16,12 @@ class StopPosition < ActiveRecord::Base
       start_time = travel_time if start_time == 0 or (travel_time > start_time and current_time > travel_time)
     end
 
-    delayed_date = start_time + (delay.minutes_delayed * 60)
-    
+    delayed_date = start_time + (delay.minutes_delayed)
+
     delayed_date = Time.utc(2000, "jan", 1, delayed_date.hour, delayed_date.min, 0)
 
     current_time = Time.utc(2000, "jan", 1, current_time.hour, current_time.min, 0)
 
-    return current_time - [delayed_date, current_time].max
+    return [delayed_date, current_time].max - current_time
   end
 end
