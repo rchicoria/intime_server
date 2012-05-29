@@ -23,7 +23,7 @@ class Delay < ActiveRecord::Base
     return Delay.where('stop_position_id = ? and this_hour = ? and day_id = ?',
                         stop_position_id,
                         current_time.hour,
-                        find_day_id(current_time)).first
+                        Delay.find_day_id(current_time)).first
   end
 
   private
@@ -32,14 +32,14 @@ class Delay < ActiveRecord::Base
     def create_new(stop_position_id, current_time)
       start_time = find_newest_travel_time(StopPosition.find(stop_position_id).bus.id, current_time)
       return Delay.create(stop_position_id: stop_position_id,
-                          day_id: find_day_id(current_time),
+                          day_id: Delay.find_day_id(current_time),
                           this_hour: start_time.hour,
                           minutes_delayed: ((current_time - start_time)/60).floor,
                           precision: 1)
     end
 
     # Helper to find the day_id of the current_time
-    def find_day_id(current_time)
+    def self.find_day_id(current_time)
       return day_id = 2 if current_time.saturday?
       return day_id = 3 if current_time.sunday?
       return day_id = 1
