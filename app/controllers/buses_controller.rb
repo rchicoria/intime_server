@@ -141,7 +141,7 @@ class BusesController < ApplicationController
 
     # Create or update delay
     delay = Delay.get_or_create_delay(StopPosition.where('bus_id = ? and bus_stop_id = ?', bus.id, bus_stop.id).first)
-    
+
     value << t
     respond_to do |format|
       format.json { render json: value }
@@ -172,7 +172,6 @@ class BusesController < ApplicationController
       # Create or update delay
       delay = Delay.get_or_create_delay(StopPosition.where('bus_id = ? and bus_stop_id = ?', bus.id, bus_stop.id).first)
       t["remaining_time"] = delay.remaining_minutes
-      # Falta a parte do update
 
       value << t
       return value
