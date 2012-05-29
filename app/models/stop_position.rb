@@ -19,7 +19,7 @@ class StopPosition < ActiveRecord::Base
     actual_delay = 0
 
     if previous_stops
-      previous_stops[0..-2].reverse_each do |previous_stop|
+      previous_stops.reverse_each do |previous_stop|
         previous_stop_delay = Delay.get_delay(previous_stop.id, current_time)
         if previous_stop_delay
           if previous_stop_delay.actual_delay and (current_time - previous_stop_delay.actual_delay_timestamp.to_time)/60 < 30
