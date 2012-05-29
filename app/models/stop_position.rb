@@ -24,7 +24,7 @@ class StopPosition < ActiveRecord::Base
     if delay.nil?
       return nil
     else
-      return [start_time + (delay.minutes_delayed * 60), current_time].max
+      return current_time - [start_time + (delay.minutes_delayed * 60), current_time].max
     end
   end
 end
