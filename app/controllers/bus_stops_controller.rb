@@ -111,7 +111,7 @@ class BusStopsController < ApplicationController
           bmap["id"] = stop_position.bus.id
           bmap["name"] = stop_position.bus.name
           previous_stops = []
-          bus.stop_positions.each do |previous_stop|
+          stop_position.bus.stop_positions.each do |previous_stop|
             if previous_stop == stop_position
               break
             else
