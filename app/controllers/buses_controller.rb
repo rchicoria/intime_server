@@ -138,6 +138,10 @@ class BusesController < ApplicationController
       bmap["name"] = stop_position.bus.name
       t["buses"] << bmap if t["buses"].index(bmap).nil?
     end
+
+    # Create or update delay
+    delay = Delay.get_or_create_delay(StopPosition.where('bus_id = ? and bus_stop_id = ?', bus.id, bus_stop.id).first)
+    
     value << t
     respond_to do |format|
       format.json { render json: value }
