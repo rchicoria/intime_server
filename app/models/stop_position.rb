@@ -5,10 +5,10 @@ class StopPosition < ActiveRecord::Base
   has_many :delays
 
   # Return predicted arrival time based on StopPosition's Delay
-  def predicted_time()
+  def self.predicted_time(stop_position_id)
     return nil if Travel.where('bus_id = ?', bus.id).empty?
     current_time = Time.now
-    delay = Delay.get_delay(id, current_time)
+    delay = Delay.get_delay(stop_position_id, current_time)
     return nil if delay.nil?
     start_time = 0
     Travel.where('bus_id = ?', bus.id).each do |travel|
