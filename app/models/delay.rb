@@ -31,7 +31,7 @@ class Delay < ActiveRecord::Base
       return Delay.create(stop_position_id: stop_position_id,
                           day_id: Delay.find_day_id(current_time),
                           this_hour: start_time.hour,
-                          minutes_delayed: ((current_time - start_time)/60).floor,
+                          minutes_delayed: ((current_time - start_time)/(60*1000).floor,
                           precision: 1)
     end
 
