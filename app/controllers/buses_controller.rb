@@ -181,8 +181,8 @@ class BusesController < ApplicationController
         end
         delay = Delay.where('stop_position_id = ? and this_hour = ? and day_id = ?', stop_position.id, current_time.hour, day_id).first
         if delay.nil?
-          Delay.create(stop_position_id: stop_position.id, day_id: day_id, this_hour: current_time.hour, minutes_delayed: ((current_time-predicted_time)/60).floor, precision: 1)
-          delay = Delay.where('stop_position_id = ? and this_hour = ? and day_id = ?', stop_position.id, current_time.hour, day_id).first
+          delay = Delay.create(stop_position_id: stop_position.id, day_id: day_id, this_hour: current_time.hour, minutes_delayed: ((current_time-predicted_time)/60).floor, precision: 1)
+          delay.save
         end
         # Add the predicted delay to the predicted time (should be > than now if enough data was collected)
         bmap["predicted_time"] = predicted_time + (delay.minutes_delayed * 60)
