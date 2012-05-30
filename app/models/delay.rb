@@ -59,14 +59,14 @@ class Delay < ActiveRecord::Base
     # Update the delay based on the new information and return it
     def self.updated_delay(delay, current_time)
       precision = [delay.precision*0.1 + 0.4, 0.9].min
-      current_time = Time.utc(2000, "jan", 1, current_time.hour, current_time.min, 0)
-      start_time = Delay.find_newest_travel_time(delay.stop_position.bus.id, current_time)
+      current_time_normal = Time.utc(2000, "jan", 1, current_time.hour, current_time.min, 0)
+      start_time = Delay.find_newest_travel_time(delay.stop_position.bus.id, current_time_normal)
       start_time = Time.utc(2000, "jan", 1, start_time.hour, start_time.min, 0)
 
-      delay.actual_delay = (current_time - (start_time + delay.minutes_delayed*60))/60
+      delay.actual_delay = (current_time_normal - (start_time + delay.minutes_delayed*60))/60
       delay.actual_delay_timestamp = current_time
 
-      delay.minutes_delayed = precision * delay.minutes_delayed + (1 - precision) * ((current_time - start_time)/60).floor
+      delay.minutes_delayed = precision * delay.minutes_delayed + (1 - precision) * ((current_time_normal - start_time)/60).floor
       delay.precision += 1
       delay.save
 
