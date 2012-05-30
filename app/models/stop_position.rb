@@ -8,13 +8,14 @@ class StopPosition < ActiveRecord::Base
   def predicted_time(previous_stops = nil)
     return nil if Travel.where('bus_id = ?', bus.id).empty?
     current_time = Time.now
+    current_time_normal = Time.utc(2000, "jan", 1, current_time.hour, current_time.min, 0)
     delay = Delay.get_delay(id, current_time)
     return nil if delay.nil?
     start_time = 0
     list = Travel.where('bus_id = ?', bus_id).sort_by {|obj| obj.start_time}
     list.each do |travel|
       travel_time = Time.utc(2000, "jan", 1, travel.start_time.hour, travel.start_time.min, 0)
-      start_time = travel_time if start_time == 0 or (travel_time > start_time and current_time > travel_time)
+      start_time = travel_time if start_time == 0 or (travel_time > start_time and current_time_normal > travel_time)
     end
 
     actual_delay = 0
