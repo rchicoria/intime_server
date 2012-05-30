@@ -118,7 +118,7 @@ class BusStopsController < ApplicationController
               previous_stops << previous_stop
             end
           end
-          bmap["predicted_time"] = stop_position.predicted_time(previous_stops)
+          bmap["predicted_time"] = stop_position.predicted_time(previous_stops).to_i
           buses << bmap
         end
         

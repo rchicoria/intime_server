@@ -162,6 +162,15 @@ class BusesController < ApplicationController
         bmap["name"] = stop_position.bus_stop.name
         bmap["lat"] = stop_position.bus_stop.lat
         bmap["lon"] = stop_position.bus_stop.lon
+        previous_stops = []
+        stop_position.bus.stop_positions.each do |previous_stop|
+          if previous_stop == stop_position
+            break
+          else
+            previous_stops << previous_stop
+          end
+        end
+        bmap["predicted_time"] = stop_position.predicted_time(previous_stops).to_i
         t["bus_stops"] << bmap if t["bus_stops"].index(bmap).nil?
       end
       while t["bus_stops"].first["id"] != bus_stop.id

@@ -38,6 +38,6 @@ class StopPosition < ActiveRecord::Base
 
     current_time = Time.utc(2000, "jan", 1, current_time.hour, current_time.min, 0)
 
-    return ([delayed_date, current_time].max - current_time)/60 + actual_delay
+    return ([delayed_date + actual_delay*60, current_time].max - current_time)/60
   end
 end
