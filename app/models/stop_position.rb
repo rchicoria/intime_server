@@ -11,7 +11,8 @@ class StopPosition < ActiveRecord::Base
     delay = Delay.get_delay(id, current_time)
     return nil if delay.nil?
     start_time = 0
-    Travel.where('bus_id = ?', bus.id).each do |travel|
+    list = Travel.where('bus_id = ?', bus_id).sort_by {|obj| obj.start_time}
+    list.each do |travel|
       travel_time = Time.utc(2000, "jan", 1, travel.start_time.hour, travel.start_time.min, 0)
       start_time = travel_time if start_time == 0 or (travel_time > start_time and current_time > travel_time)
     end
