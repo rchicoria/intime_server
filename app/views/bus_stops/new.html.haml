@@ -21,14 +21,18 @@
 
   function init(){
     $.getJSON(
-      '/bus_stops/',
+      'http://web.mobility.tice.ipn.pt/rest/stops.json?key=nCXwtUgwNRYTZbVjvqkPSvgjvAuPeoOnmYuIaEKw',
       function(data) {
+        alert("ola");
         for (var i = 0; i < data.length; i++ ) {
-          var latLng = new google.maps.LatLng(data[i]["lat"],data[i]["lon"]);
-          var marker = placeMarkerStart(latLng, data[i]["name"]);
+          var latLng = new google.maps.LatLng(data[i]["point"]["coordinates"][0],data[i]["point"]["coordinates"][1]);
+          var marker = placeMarkerStart(latLng, data[i]["stop_name"]);
         }
       }
-    );
+    ).error(function(jqXHR, textStatus, errorThrown) {
+        console.log("error " + textStatus);
+        console.log("incoming Text " + jqXHR.responseText);
+    });
     gmaps_initialize();
     google.maps.event.addListener(map, 'click', function(event) {
       var marker = placeMarker(event.latLng);
